@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ReturnDocument } = require("mongodb");
 const dotenv = require("dotenv");
 var ObjectId = require("mongodb").ObjectId;
 
@@ -93,35 +93,82 @@ async function getAllUsers(req, res) {
 }
 
 async function getUserProfile(req, res) {
-  const currentId= req.params.id;
-  try{
+  const currentId = req.params.id;
+  try {
     await connectClient();
     const db = client.db("githubclone");
     const userCollection = db.collection("users");
 
-     const user = await userCollection.findOne({
-_id:new ObjectId(currentId),
+    const user = await userCollection.findOne({
+      _id: new ObjectId(currentId),
+    });
 
-     });
-
-     if (!user) {
-      return res.status(500).json({ message: "Invalid credentials !" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
     }
 
-      res.send(user,{message:"profile fetched !"});
-  }catch (err) {
+    res.send(user, { message: "profile fetched !" });
+  } catch (err) {
     console.error("Error during fetching:", err.message);
     res.status(500).send("Server Error");
   }
-
 }
 
 async function updateUserProfile(req, res) {
-  res.send("Profile Updated!");
+  const currentId = req.params;
+  const { email, password } = req.body;
+
+  try {
+    await connectClient();
+    const db = client.db("githubclone");
+    const userCollection = db.collection("users");
+
+    let updateFields = { email };
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updateFields.password = hashedPassword;
+    }
+
+    const result = await userCollection.findOneAndUpdate(
+      {
+        _id: new ObjectId(currentId),
+      },
+      { $set: updateFields },
+      { ReturnDocument: "after" },
+    );
+
+    if (!result.value) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    res.send(result);
+  } catch (err) {
+    console.error("Error during updating:", err.message);
+    res.status(500).send("Server Error");
+  }
 }
 
 async function deleteUserProfile(req, res) {
-  res.send("Profile deleted");
+  const currentId = req.params;
+
+  try {
+    await connectClient();
+    const db = client.db("githubclone");
+    const userCollection = db.collection("users");
+
+    const result = await userCollection.deleteOne({
+      _id: new ObjectId(currentId),
+    });
+
+    if (result.deleteCount == 0) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    res.json({ message: "user profile dleted" });
+  } catch (err) {
+    console.error("Error during deleting:", err.message);
+    res.status(500).send("Server Error");
+  }
 }
 
 module.exports = {
