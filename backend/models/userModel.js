@@ -4,38 +4,38 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
   username: {
     type: String,
-    required: true,
-    unique: true,
+    required:true,
+    unique:true,
   },
 
   email: {
     type: String,
-    required: true,
-    unique: true,
+    required:true,
+    unique:true,
   },
   password: {
     type: String,
   },
   repositories: [
     {
-      default: [],
+      default:[],
       type: Schema.Types.ObjectId,
       ref: "Repository",
     },
   ],
   followedUsers: [
     {
-      default: [],
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      default:[],
+      type:Schema.Types.ObjectId,
+      ref:"User",
     },
   ],
 
   starRepos: [
     {
-      default: [],
-      type: Schema.Types.ObjectId,
-      ref: "Repository",
+      default:[],
+      type:Schema.Types.ObjectId,
+      ref:"Repository",
     },
   ],
 });

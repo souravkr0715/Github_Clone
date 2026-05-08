@@ -3,6 +3,7 @@ const { required } = require("yargs");
 const { Schema } = mongoose;
 
 const RepositorySchema = new Schema({
+  
   name: {
     type: String,
     required: true,
@@ -11,7 +12,6 @@ const RepositorySchema = new Schema({
   description: {
     type: String,
   },
-
   content: [
     {
       type: String,
@@ -25,7 +25,6 @@ const RepositorySchema = new Schema({
     ref: "User",
     required: true,
   },
-
   issues: [
     {
       type:Schema.Types.ObjectId,

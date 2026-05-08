@@ -82,7 +82,8 @@ function startServer() {
     .catch((err) => console.error("Unable to connect :", err));
 
   app.use(cors({ origin: "*" }));
-  app.use("/",mainRouter)
+  app.use("/",mainRouter);
+ 
 
   let user = "test";
   const httpServer = http.createServer(app);

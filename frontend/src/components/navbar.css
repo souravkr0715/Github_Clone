@@ -1,0 +1,31 @@
+nav{
+    display: flex;
+    border-bottom: 2px solid white;
+}
+
+nav img{
+    width: 100%;
+    border-radius: 100%;
+}
+
+nav div{
+    display: flex;
+}
+
+nav h3{
+    margin-left: 15px;
+    color: white;
+}
+
+
+nav p{
+    margin-left: 50px;
+    color: white;
+
+}
+
+nav h3:hover,
+nav p:hover{
+   
+    text-decoration: underline;
+}
