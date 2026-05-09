@@ -30,7 +30,7 @@ const handleLogin = async(e)=>{
 
   try{
     setLoading(true);
-    const res = await axios.post("http://localhost:3000/Login",{
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/login`,{
       email:email,
       password:password,
     })
