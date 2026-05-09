@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "overrides": {
+    "@primer/primitives": "9.2.0"
+  },
   "dependencies": {
     "@primer/react": "^38.21.1",
     "@uiw/react-heat-map": "^2.3.3",
