@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+      "vercel-install": "npm install --ignore-scripts"
+    
   },
   "overrides": {
     "@primer/primitives": "9.2.0"
