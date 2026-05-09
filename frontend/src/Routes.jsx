@@ -38,8 +38,13 @@ export default function Routes() {
     },
      {
         path:"/auth",
-        element:<Login/>
+        element:<Signup/>
     },
+    {
+        path:"/login",
+        element:<Login/>
+     },
+
      {
         path:"/signup",
         element:<Signup/>
